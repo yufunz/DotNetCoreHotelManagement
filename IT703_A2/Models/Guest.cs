@@ -16,6 +16,7 @@ namespace IT703_A2.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public string Phone { get; set; }
         [Required]

@@ -1,25 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using IT703_A2.Models.Enums;
 
 namespace IT703_A2.Models
 {
     public class Booking
     {
+        public Booking()
+        {
+            RoomBookeds = new HashSet<RoomBooked>();
+            Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int BookingId { get; set; }
+        public string Id { get; set; }
         [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
+        public string Name { get; set; }
         public string Notes { get; set; }
         [Required]
-        public int NumGuests { get; set; }
-        [Required]
-        public double RoomRate { get; set; }
+        [Column(TypeName = "decimal(8, 2)")]
+        public double Rate { get; set; }
+        public BookingStatus Status { get; set; }
+
+        [Column(TypeName = "decimal(8, 2)")]
         public double RestaurantCharge { get; set; }
         [Required]
         public bool Paid { get; set; }
@@ -28,10 +31,11 @@ namespace IT703_A2.Models
         public DateTime CheckIn { get; set; }
         [Required]
         public DateTime CheckOut { get; set; }
-
-        public Guest Guest { get; set; }
-        public ICollection<Room> Rooms { get; set; }
-        public Carpark? Carpark { get; set; }
-
+        public string GuestId { get; set; }
+        public virtual Guest Guest { get; set; }
+        public virtual ICollection<RoomBooked> RoomBookeds { get; set; }
+        public virtual Carpark? Carpark { get; set; }
+        public string InvoiceId { get; set; }
+        public virtual Invoice Invoice { get; set; }
     }
 }
