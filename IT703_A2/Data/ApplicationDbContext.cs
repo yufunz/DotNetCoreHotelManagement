@@ -10,6 +10,32 @@ namespace IT703_A2.Data
             : base(options)
         {
         }
-        public DbSet<Room> Room { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Company> Companys { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<Guest> Guests { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<RoomBooked> RoomsBookeds { get; set; }
+        public DbSet<RoomType> RoomTypes { get; set; }
+        public DbSet<Carpark> Carparks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<RoomBooked>(r =>
+            {
+                r.HasKey(k => new { k.BookingId, k.RoomId });
+
+                r.HasOne(ro => ro.Room)
+                .WithMany(rr => rr.RoomBookeds)
+                .HasForeignKey(ro => ro.RoomId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            base.OnModelCreating(builder);
+        }
+
     }
 }

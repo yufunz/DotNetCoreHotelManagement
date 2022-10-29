@@ -35,7 +35,6 @@ namespace IT703_A2.Models
         public virtual Guest Guest { get; set; }
         public virtual ICollection<RoomBooked> RoomBookeds { get; set; }
         public virtual Carpark? Carpark { get; set; }
-        public string InvoiceId { get; set; }
         public virtual Invoice Invoice { get; set; }
     }
 }
