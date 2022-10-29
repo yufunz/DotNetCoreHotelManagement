@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using IT703_A2.Models.Enums;
 
 namespace IT703_A2.Models
 {
@@ -10,12 +11,7 @@ namespace IT703_A2.Models
         public string Image { get; set; }
         public string Description { get; set; }
         public int Rate { get; set; }
-        public Status Status { get; set; }
+        public RoomStatus Status { get; set; }
         public RoomType RoomType { get; set; }
-    }
-
-    public enum Status
-    {
-        VacantClean, VacantDirty, OccupiedClean, OccupiedService, OnMaintenance
     }
 }
