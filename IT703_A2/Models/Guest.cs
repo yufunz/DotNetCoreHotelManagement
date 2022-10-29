@@ -4,11 +4,28 @@ namespace IT703_A2.Models
 {
     public class Guest
     {
+        public Guest()
+        {
+            Bookings = new HashSet<Booking>();
+            Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int GuestId { get; set; }
-        public int NumChildren { get; set; }
-        public int NumAdults { get; set; }
-        public Agency Agency { get; set; }
-        public Company Company { get; set; }
+        public string Id { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        [Required]
+        public string Address { get; set; }
+        public string Details { get; set; }
+        public bool Deleted { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual Agency Agency { get; set; }
+        public virtual Company Company { get; set; }
     }
 }
