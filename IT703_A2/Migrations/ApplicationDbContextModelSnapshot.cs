@@ -4,18 +4,16 @@ using IT703_A2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace IT703_A2.Data.Migrations
+namespace IT703_A2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221029114327_UpdateModels")]
-    partial class UpdateModels
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,6 +71,9 @@ namespace IT703_A2.Data.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<string>("GuestId")
                         .IsRequired()
@@ -166,10 +167,10 @@ namespace IT703_A2.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AgencyId")
+                    b.Property<int?>("AgencyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -303,6 +304,7 @@ namespace IT703_A2.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomTypeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
@@ -329,7 +331,7 @@ namespace IT703_A2.Data.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomsBookeds");
+                    b.ToTable("RoomBookeds");
                 });
 
             modelBuilder.Entity("IT703_A2.Models.RoomType", b =>
@@ -588,15 +590,11 @@ namespace IT703_A2.Data.Migrations
                 {
                     b.HasOne("IT703_A2.Models.Agency", "Agency")
                         .WithMany("Guests")
-                        .HasForeignKey("AgencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AgencyId");
 
                     b.HasOne("IT703_A2.Models.Company", "Company")
                         .WithMany("Guests")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.Navigation("Agency");
 
@@ -624,7 +622,9 @@ namespace IT703_A2.Data.Migrations
 
                     b.HasOne("IT703_A2.Models.RoomType", "RoomType")
                         .WithMany("Rooms")
-                        .HasForeignKey("RoomTypeId");
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Hotel");
 

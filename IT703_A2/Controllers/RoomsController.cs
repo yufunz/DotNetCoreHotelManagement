@@ -7,162 +7,88 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IT703_A2.Data;
 using IT703_A2.Models;
+using IT703_A2.Models.Rooms;
+using IT703_A2.Services;
 
 namespace IT703_A2.Controllers
 {
     public class RoomsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRoomsService roomsService;
 
-        public RoomsController(ApplicationDbContext context)
+        public RoomsController(IRoomsService roomsService)
         {
-            _context = context;
+            this.roomsService = roomsService;
         }
 
-        // GET: Rooms
-        public async Task<IActionResult> Index()
+        public IActionResult All([FromQuery] ListRoomsQueryModel rms)
         {
-            var applicationDbContext = _context.Rooms.Include(r => r.Hotel);
-            return View(await applicationDbContext.ToListAsync());
+            var allRooms = roomsService.All(rms);
+
+            return this.View(allRooms);
         }
 
-        // GET: Rooms/Details/5
-        public async Task<IActionResult> Details(string id)
+        public IActionResult Details(string id)
         {
-            if (id == null || _context.Rooms == null)
-            {
-                return NotFound();
-            }
+            var currentRoom = this.roomsService.Details(id);
 
-            var room = await _context.Rooms
-                .Include(r => r.Hotel)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
+            return this.View(currentRoom);
         }
 
-        // GET: Rooms/Create
-        public IActionResult Create()
+        public IActionResult Edit(string id)
         {
-            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id");
-            return View();
+            var room = this.roomsService.Edit(id);
+
+            return this.View(room);
         }
 
-        // POST: Rooms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoomNum,FloorNum,IsDeleted,Image,Description,Rate,Status,HotelId")] Room room)
+        public async Task<IActionResult> Edit(EditRoomFormModel room)
         {
-            if (ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                _context.Add(room);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                room.RoomTypes = this.roomsService.GetRoomTypes();
+       
+                return this.View(room);
             }
-            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", room.HotelId);
-            return View(room);
+
+            await this.roomsService.Update(room);
+
+            return this.RedirectToAction("All", "Rooms");
         }
 
-        // GET: Rooms/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Add()
         {
-            if (id == null || _context.Rooms == null)
-            {
-                return NotFound();
-            }
+            var room = this.roomsService.FillRoomAddForm();
 
-            var room = await _context.Rooms.FindAsync(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", room.HotelId);
-            return View(room);
+            return this.View(room);
         }
 
-        // POST: Rooms/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,RoomNum,FloorNum,IsDeleted,Image,Description,Rate,Status,HotelId")] Room room)
+        public async Task<IActionResult> Add(AddRoomFormModel room)
         {
-            if (id != room.Id)
-            {
-                return NotFound();
-            }
+            if(!ModelState.IsValid)
+            { 
+                var fillRoomFields = this.roomsService.FillRoomAddForm();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(room);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RoomExists(room.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", room.HotelId);
-            return View(room);
-        }
+                room.HotelId = fillRoomFields.HotelId;
+                room.RoomTypes = fillRoomFields.RoomTypes;
+                room.HotelName = fillRoomFields.HotelName;
 
-        // GET: Rooms/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null || _context.Rooms == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Rooms
-                .Include(r => r.Hotel)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        // POST: Rooms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            if (_context.Rooms == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Rooms'  is null.");
-            }
-            var room = await _context.Rooms.FindAsync(id);
-            if (room != null)
-            {
-                _context.Rooms.Remove(room);
+                return this.View(room);
             }
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await this.roomsService.Add(room);
+
+            return this.RedirectToAction("All", "Rooms");
         }
 
-        private bool RoomExists(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-          return _context.Rooms.Any(e => e.Id == id);
+            await roomsService.Delete(id);
+
+            return this.RedirectToAction("All", "Rooms");
         }
+
     }
 }
