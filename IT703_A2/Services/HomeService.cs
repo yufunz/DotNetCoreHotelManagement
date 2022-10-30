@@ -5,7 +5,7 @@ using IT703_A2.Models.Enums;
 
 namespace IT703_A2.Services
 {
-    public class HomeService
+    public class HomeService : IHomeService
     {
         private readonly ApplicationDbContext db;
         private readonly IBookingsService bookingService;

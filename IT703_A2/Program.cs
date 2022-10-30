@@ -2,6 +2,7 @@ using IT703_A2.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using IT703_A2.Models;
+using IT703_A2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,17 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
+
+builder.Services.AddTransient<IGuestsService, GuestsService>();
+builder.Services.AddTransient<IRoomTypesService, RoomTypesService>();
+builder.Services.AddTransient<IRoomsService, RoomsService>();
+builder.Services.AddTransient<IBookingsService, BookingsService>();
+builder.Services.AddTransient<IInvoicesService, InvoicesService>();
+builder.Services.AddTransient<IHomeService, HomeService>();
+//builder.Services.AddTransient<IHotelsService, HotelsService>();
+//builder.Services.AddTransient<IUsersService, UsersService>();
+builder.Services.AddTransient<ILoginUsersService, LoginUsersService>();
+
 
 var app = builder.Build();
 
