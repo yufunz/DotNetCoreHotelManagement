@@ -24,8 +24,8 @@ namespace IT703_A2.Models.Guests
 
         public string Details { get; set; }
 
-        public Company Company { get; set; }
+        public Company? Company { get; set; }
 
-        public Agency Agency { get; set; }
+        public Agency? Agency { get; set; }
     }
 }

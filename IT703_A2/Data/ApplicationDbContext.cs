@@ -18,7 +18,7 @@ namespace IT703_A2.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<RoomBooked> RoomsBookeds { get; set; }
+        public DbSet<RoomBooked> RoomBookeds { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Carpark> Carparks { get; set; }
 

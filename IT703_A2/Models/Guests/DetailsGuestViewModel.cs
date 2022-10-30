@@ -29,7 +29,7 @@ namespace IT703_A2.Models.Guests
         public Agency Agency { get; set; }
 
         [Display(Name = "Created at")]
-        public string Created { get; set; }
+        public string CreatedAt { get; set; }
 
         [Display(Name = "Total bookings")]
         public int CreatedBookingsCount { get; set; }

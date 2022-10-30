@@ -29,6 +29,10 @@ namespace IT703_A2.Models.Rooms
         public string RoomTypeId { get; set; }
 
         [Required]
+        [Display(Name = "Current room status")]
+        public string RoomStatus { get; set; }
+
+        [Required]
         public IEnumerable<RoomTypeViewModel> RoomTypes { get; set; }
     }
 }

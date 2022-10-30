@@ -21,7 +21,9 @@ namespace IT703_A2.Models
         public string Description { get; set; }
         public int Rate { get; set; }
         public RoomStatus Status { get; set; }
-        public RoomType RoomType { get; set; }
+        [Required]
+        public string RoomTypeId { get; set; }
+        public virtual RoomType RoomType { get; set; }
         public string HotelId { get; set; }
         public virtual Hotel Hotel { get; set; }
         public virtual ICollection<RoomBooked> RoomBookeds { get; set; }

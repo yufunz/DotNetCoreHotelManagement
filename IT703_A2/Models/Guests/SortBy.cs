@@ -5,7 +5,7 @@
         None = 0,
         FName = 1,
         LName = 2,
-        CreatedAn = 3,
+        CreatedAt = 3,
         Phone = 4,
     }
 }

@@ -19,11 +19,11 @@ namespace IT703_A2.Models
         public string Notes { get; set; }
         [Required]
         [Column(TypeName = "decimal(8, 2)")]
-        public double Rate { get; set; }
+        public decimal Rate { get; set; }
         public BookingStatus Status { get; set; }
 
         [Column(TypeName = "decimal(8, 2)")]
-        public double RestaurantCharge { get; set; }
+        public decimal RestaurantCharge { get; set; }
         [Required]
         public bool Paid { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -31,6 +31,7 @@ namespace IT703_A2.Models
         public DateTime CheckIn { get; set; }
         [Required]
         public DateTime CheckOut { get; set; }
+        public int Duration { get; set; }
         public string GuestId { get; set; }
         public virtual Guest Guest { get; set; }
         public virtual ICollection<RoomBooked> RoomBookeds { get; set; }

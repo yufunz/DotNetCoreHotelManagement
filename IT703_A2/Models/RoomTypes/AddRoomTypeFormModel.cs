@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IT703_A2.Models.RoomsType
+namespace IT703_A2.Models.RoomTypes
 {
     public class AddRoomTypeFormModel
     {

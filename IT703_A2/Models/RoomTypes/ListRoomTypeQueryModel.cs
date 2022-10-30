@@ -1,4 +1,4 @@
-﻿namespace IT703_A2.Models.RoomsType
+﻿namespace IT703_A2.Models.RoomTypes
 {
     public class ListRoomTypeQueryModel
     {

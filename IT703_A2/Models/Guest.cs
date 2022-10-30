@@ -26,7 +26,7 @@ namespace IT703_A2.Models
         public DateTime CreatedAt { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual Agency Agency { get; set; }
-        public virtual Company Company { get; set; }
+        public virtual Agency? Agency { get; set; }
+        public virtual Company? Company { get; set; }
     }
 }
