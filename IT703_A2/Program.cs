@@ -61,7 +61,7 @@ builder.Services.AddTransient<IInvoicesService, InvoicesService>();
 builder.Services.AddTransient<IHomeService, HomeService>();
 //builder.Services.AddTransient<IHotelsService, HotelsService>();
 //builder.Services.AddTransient<IUsersService, UsersService>();
-builder.Services.AddTransient<ILoginUsersService, LoginUsersService>();
+//builder.Services.AddTransient<ILoginUsersService, LoginUsersService>();
 
 
 var app = builder.Build();
