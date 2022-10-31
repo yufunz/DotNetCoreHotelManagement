@@ -1,3 +1,7 @@
+:root{
+    --bs-teal: nav-text-col;
+}
+
 html {
   font-size: 14px;
 }
@@ -16,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+nav {
+    background-color: #e5ffca;
+    color: #cffba1;
+}
+
+.theme-btn {
+    background-color: #b680db;
+}
+
