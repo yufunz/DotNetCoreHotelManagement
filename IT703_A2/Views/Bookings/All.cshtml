@@ -1,17 +1,17 @@
-﻿@model ListRoomsQueryModel
+﻿@model BookingsQueryModel
 
 @{
-    ViewData["Title"] = "All Rooms";
+    ViewData["Title"] = "All Bookings";
 }
 
-<h1 class="text-center my-5">All Rooms</h1>
+<h1 class="text-center my-5">All Bookings</h1>
 
 <div class="card mb-2">
     <div class="card-header">
         <i class="bi bi-info-circle"></i> Info
     </div>
     <div class="card-body">
-        <p class="card-text">Please use room name, description and room type for searching.</p>
+        <p class="card-text">Here is listing all bookings in status <code>Pending</code> or <code>Confirmed</code>. Please use booking name for searching.</p>
     </div>
 </div>
 
@@ -28,12 +28,18 @@
 
 <table class="table table-striped my-3">
     <thead>
-        <tr class="table-success">
+        <tr class="table-info">
             <th>
-                Room Number
+                Booking Name
             </th>
             <th>
-                Room Type
+                Status
+            </th>
+            <th>
+                Check-In Date
+            </th>
+            <th>
+                Check-Out Date
             </th>
             <th>
                 Details
@@ -41,17 +47,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var room in Model.Rooms)
+        @foreach (var booking in Model.Bookings)
         {
             <tr>
                 <td>
-                    @room.RoomNum
+                    @booking.Name
                 </td>
                 <td>
-                    @room.RoomType
+                    @booking.Status
                 </td>
                 <td>
-                    <a asp-route-id="@room.Id" asp-controller="Rooms" asp-action="Details">Details</a>
+                    @booking.CheckIn
+                </td>
+                <td>
+                    @booking.CheckOut
+                </td>
+                <td>
+                    <a asp-route-id="@booking.Id" asp-controller="Bookings" asp-action="Details">Details</a>
                 </td>
             </tr>
         }
@@ -75,28 +87,28 @@
         {
             <li class="page-item">
                 <a class="page-link" tabindex="-1"
-                   asp-controller="Rooms" asp-action="All" asp-route-CurrentPage="@Model.PreviousPage">Previous</a>
+                   asp-controller="Bookings" asp-action="All" asp-route-CurrentPage="@Model.PreviousPage" asp-route-Search="@Model.Search">Previous</a>
             </li>
         }
 
-        @for (int i = 1; i <= Model.TotalItems; i++)
+        @for (int i = 1; i <= Model.TotalPages; i++)
         {
             if (Model.CurrentPage == i)
             {
                 <li class="page-item active">
-                    <a class="page-link" href="#">@i</a>
+                    <a class="page-link">@i</a>
                 </li>
             }
             else
             {
                 <li class="page-item">
                     <a class="page-link" asp-route-CurrentPage="@i"
-                       asp-controller="Rooms" asp-action="All">@i</a>
+                       asp-controller="Bookings" asp-action="All" asp-route-Search="@Model.Search">@i</a>
                 </li>
             }
         }
 
-        @if (Model.CurrentPage == Model.TotalItems || Model.TotalItems == 0)
+        @if (Model.CurrentPage == Model.TotalPages || Model.TotalPages == 0)
         {
             <li class="page-item disabled">
                 <a class="page-link">Next</a>
@@ -105,11 +117,10 @@
         else
         {
             <li class="page-item">
-                <a class="page-link" asp-controller="Rooms" asp-action="All"
-                   asp-route-CurrentPage="@Model.NextPage">Next</a>
+                <a class="page-link" asp-controller="Bookings" asp-action="All"
+                   asp-route-NextPage="@Model.NextPage" asp-route-CurrentPage="@Model.NextPage" asp-route-Search="@Model.Search">Next</a>
             </li>
         }
     </ul>
 </nav>
-<a class="btn btn-success" asp-controller="Rooms" asp-action="Add">Add Room</a>
-
+<a class="btn btn-success" asp-controller="Bookings" asp-action="Add">Add Booking</a>
