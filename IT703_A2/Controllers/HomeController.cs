@@ -1,32 +1,25 @@
 ﻿using IT703_A2.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using IT703_A2.Services;
 
 namespace IT703_A2.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IHomeService homeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHomeService homeService)
         {
-            _logger = logger;
+            this.homeService = homeService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var currentDashboard = this.homeService.GetDashboardInfo();
+
+            return View(currentDashboard);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

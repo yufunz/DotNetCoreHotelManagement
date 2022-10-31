@@ -34,14 +34,14 @@ namespace IT703_A2.Data
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
-            builder.Entity<Booking>(r =>
+            builder.Entity<Booking>(b =>
             {
-                r.HasOne(g => g.Guest)
-                .WithMany(re => re.Bookings)
+                b.HasOne(g => g.Guest)
+                .WithMany(bk => bk.Bookings)
                 .HasForeignKey(g => g.GuestId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                r.HasOne(res => res.Invoice)
+                b.HasOne(bk => bk.Invoice)
                 .WithOne(i => i.Booking)
                 .HasForeignKey<Invoice>(i => i.BookingId);
             });
