@@ -22,7 +22,7 @@ namespace IT703_A2.Models
         public string Email { get; set; }
         [Required]
         public string Phone { get; set; }
-        public string Image { get; set; }
+        public string? Image { get; set; }
         public bool IsDeleted { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }

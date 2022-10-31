@@ -34,6 +34,18 @@ namespace IT703_A2.Data
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
+            builder.Entity<Booking>(r =>
+            {
+                r.HasOne(g => g.Guest)
+                .WithMany(re => re.Bookings)
+                .HasForeignKey(g => g.GuestId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                r.HasOne(res => res.Invoice)
+                .WithOne(i => i.Booking)
+                .HasForeignKey<Invoice>(i => i.BookingId);
+            });
+
             base.OnModelCreating(builder);
         }
 

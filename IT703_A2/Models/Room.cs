@@ -17,8 +17,8 @@ namespace IT703_A2.Models
         public string RoomNum { get; set; }
         public int FloorNum { get; set; }
         public bool IsDeleted { get; set; }
-        public string Image { get; set; }
-        public string Description { get; set; }
+        public string? Image { get; set; }
+        public string? Description { get; set; }
         public int Rate { get; set; }
         public RoomStatus Status { get; set; }
         [Required]

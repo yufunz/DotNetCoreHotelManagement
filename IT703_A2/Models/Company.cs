@@ -13,7 +13,7 @@ namespace IT703_A2.Models
         public string Phone { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        public string Detail { get; set; }
+        public string? Detail { get; set; }
         public ICollection<Guest> Guests { get; set; }
     }
 }

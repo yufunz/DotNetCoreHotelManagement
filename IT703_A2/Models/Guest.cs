@@ -21,7 +21,7 @@ namespace IT703_A2.Models
         public string Phone { get; set; }
         [Required]
         public string Address { get; set; }
-        public string Details { get; set; }
+        public string? Details { get; set; }
         public bool Deleted { get; set; }
         public DateTime CreatedAt { get; set; }
 

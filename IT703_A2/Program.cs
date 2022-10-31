@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using IT703_A2.Models;
 using IT703_A2.Services;
+using IT703_A2.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +13,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<User>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
+/*
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
@@ -41,7 +48,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = false;
 });
+*/
 
+/*
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
@@ -52,6 +61,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
+*/
 
 builder.Services.AddTransient<IGuestsService, GuestsService>();
 builder.Services.AddTransient<IRoomTypesService, RoomTypesService>();
@@ -77,6 +87,9 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Seed data
+app.PrepareDatabase();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
