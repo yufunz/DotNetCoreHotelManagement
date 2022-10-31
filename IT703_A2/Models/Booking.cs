@@ -16,14 +16,14 @@ namespace IT703_A2.Models
         public string Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
         [Required]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal Rate { get; set; }
         public BookingStatus Status { get; set; }
 
         [Column(TypeName = "decimal(8, 2)")]
-        public decimal RestaurantCharge { get; set; }
+        public decimal? RestaurantCharge { get; set; }
         [Required]
         public bool Paid { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -32,11 +32,10 @@ namespace IT703_A2.Models
         [Required]
         public DateTime CheckOut { get; set; }
         public int Duration { get; set; }
-        public string GuestId { get; set; }
-        public virtual Guest Guest { get; set; }
+        public string? GuestId { get; set; }
+        public virtual Guest? Guest { get; set; }
         public virtual ICollection<RoomBooked> RoomBookeds { get; set; }
-        public virtual Carpark? Carpark { get; set; }
-        public string InvoiceId { get; set; }
         public virtual Invoice Invoice { get; set; }
+        public virtual Carpark? Carpark { get; set; }
     }
 }

@@ -35,6 +35,8 @@ namespace IT703_A2.Controllers
             booking.CheckIn = DateTime.Now.Date;
             booking.CheckOut = DateTime.Now.AddDays(1);
 
+            booking = this.bookingService.ListFreeRooms(booking);
+
             return this.View(booking);
         }
 
@@ -56,12 +58,15 @@ namespace IT703_A2.Controllers
 
             if (!string.IsNullOrWhiteSpace(booking.AddBookingButton))
             {
+
+                /*
                 if (!ModelState.IsValid)
                 {
                     booking = this.bookingService.ListFreeRooms(booking);
 
                     return this.View(booking);
                 }
+                */
 
                 await this.bookingService.AddBooking(booking);
 

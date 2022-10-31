@@ -75,19 +75,13 @@ namespace IT703_A2.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("GuestId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("InvoiceId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Paid")
@@ -96,7 +90,7 @@ namespace IT703_A2.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("decimal(8,2)");
 
-                    b.Property<decimal>("RestaurantCharge")
+                    b.Property<decimal?>("RestaurantCharge")
                         .HasColumnType("decimal(8,2)");
 
                     b.Property<int>("Status")
@@ -576,8 +570,7 @@ namespace IT703_A2.Migrations
                     b.HasOne("IT703_A2.Models.Guest", "Guest")
                         .WithMany("Bookings")
                         .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Carpark");
 

@@ -1,0 +1,54 @@
+﻿@model AddBookingFormModel
+
+@{
+    ViewData["Title"] = "Make Booking";
+}
+
+<h1 class="text-center my-5">Make Booking</h1>
+
+<div class="row">
+    <form method="post">
+        <div class="row col-12 justify-content-center">
+            <div class="form-group col-3 offset-1">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+        </div>
+        <div class="row col-12 justify-content-center">
+            <div class="form-group col-3 offset-1">
+                <label asp-for="CheckIn"></label>
+                <input asp-for="CheckIn" class="form-control" />
+                <span asp-validation-for="CheckIn" class="text-danger small"></span>
+            </div>
+            <div class="form-group col-2 offset-1">
+                <input type="submit" class="btn btn-info my-4" asp-for="@Model.LoadRoomsButton" value="Load Rooms" />
+            </div>
+            <!--
+            <div class="form-group col-2 offset-1">
+                <input type="submit" class="btn btn-info my-4" id="LoadRoomsButton" name="LoadRoomsButton" value="Load Rooms" />
+            </div>
+            -->
+            <div class="form-group col-3 offset-1">
+                <label asp-for="CheckOut"></label>
+                <input asp-for="CheckOut" class="form-control" />
+                <span asp-validation-for="CheckOut" class="text-danger small"></span>
+            </div>
+        </div>
+        <div class="row col-12 justify-content-center">
+            <div class="form-group col-3 offset-1">
+                <label asp-for="SelectedRooms"></label>
+                <select multiple="multiple" asp-for="SelectedRooms" asp-items="@Model.AvailableRooms" class="form-control" row="6">
+                </select>
+                <span asp-validation-for="SelectedRooms" class="text-danger small"></span>
+            </div>
+        </div>
+        <input id="addBooking" type="submit" asp-for="AddBookingButton" value="Add" class="mt-5 btn btn-success offset-6" />
+    </form>
+</div>
+
+@section scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
