@@ -21,7 +21,7 @@ namespace IT703_A2.Controllers
             this.roomsService = roomsService;
         }
 
-        public IActionResult All([FromQuery] ListRoomsQueryModel rms)
+        public IActionResult Index([FromQuery] ListRoomsQueryModel rms)
         {
             var allRooms = roomsService.All(rms);
 

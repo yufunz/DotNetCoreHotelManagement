@@ -7,162 +7,121 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IT703_A2.Data;
 using IT703_A2.Models;
+using IT703_A2.Models.Bookings;
+using IT703_A2.Services;
 
 namespace IT703_A2.Controllers
 {
     public class BookingsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IBookingsService bookingService;
 
-        public BookingsController(ApplicationDbContext context)
+        public BookingsController(IBookingsService bookingService)
         {
-            _context = context;
+            this.bookingService = bookingService;
         }
 
-        // GET: Bookings
-        public async Task<IActionResult> Index()
+        public IActionResult All([FromQuery]BookingsQueryModel res)
         {
-            var applicationDbContext = _context.Bookings.Include(b => b.Guest);
-            return View(await applicationDbContext.ToListAsync());
+            var allBookings = bookingService.All(res);
+
+            return this.View(allBookings);
         }
 
-        // GET: Bookings/Details/5
-        public async Task<IActionResult> Details(string id)
+        public IActionResult Add()
         {
-            if (id == null || _context.Bookings == null)
-            {
-                return NotFound();
-            }
+            var booking = new AddBookingFormModel();
 
-            var booking = await _context.Bookings
-                .Include(b => b.Guest)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
+            booking.CheckIn = DateTime.Now.Date;
+            booking.CheckOut = DateTime.Now.AddDays(1);
 
-            return View(booking);
+            return this.View(booking);
         }
 
-        // GET: Bookings/Create
-        public IActionResult Create()
-        {
-            ViewData["GuestId"] = new SelectList(_context.Guests, "Id", "Id");
-            return View();
-        }
-
-        // POST: Bookings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Notes,Rate,Status,RestaurantCharge,Paid,CreatedAt,CheckIn,CheckOut,GuestId")] Booking booking)
+        public async Task <IActionResult> Add(AddBookingFormModel booking)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["GuestId"] = new SelectList(_context.Guests, "Id", "Id", booking.GuestId);
-            return View(booking);
-        }
 
-        // GET: Bookings/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null || _context.Bookings == null)
+            if (booking.CheckIn < DateTime.Now.Date)
             {
-                return NotFound();
+                booking.CheckIn = DateTime.Now.Date;
+                booking.CheckOut = DateTime.Now.Date.AddDays(1);
             }
 
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking == null)
+            if(!string.IsNullOrWhiteSpace(booking.LoadRoomsButton))
             {
-                return NotFound();
-            }
-            ViewData["GuestId"] = new SelectList(_context.Guests, "Id", "Id", booking.GuestId);
-            return View(booking);
-        }
-
-        // POST: Bookings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Notes,Rate,Status,RestaurantCharge,Paid,CreatedAt,CheckIn,CheckOut,GuestId")] Booking booking)
-        {
-            if (id != booking.Id)
-            {
-                return NotFound();
+                booking = this.bookingService.ListFreeRooms(booking);
             }
 
-            if (ModelState.IsValid)
+
+            if (!string.IsNullOrWhiteSpace(booking.AddBookingButton))
             {
-                try
+                if (!ModelState.IsValid)
                 {
-                    _context.Update(booking);
-                    await _context.SaveChangesAsync();
+                    booking = this.bookingService.ListFreeRooms(booking);
+
+                    return this.View(booking);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BookingExists(booking.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["GuestId"] = new SelectList(_context.Guests, "Id", "Id", booking.GuestId);
-            return View(booking);
+
+                await this.bookingService.AddBooking(booking);
+
+                return this.RedirectToAction("All", "Bookings");
+            }        
+
+            return this.View(booking);
         }
 
-        // GET: Bookings/Delete/5
+        public IActionResult Details(string id)
+        {
+            var curBooking = this.bookingService.GetDetails(id);
+
+            return this.View(curBooking);
+        }
+
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Bookings == null)
-            {
-                return NotFound();
-            }
+            await this.bookingService.Delete(id);
 
-            var booking = await _context.Bookings
-                .Include(b => b.Guest)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
-
-            return View(booking);
+            return this.RedirectToAction("All", "Bookings");
         }
 
-        // POST: Bookings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public IActionResult AssignGuest(string id)
         {
-            if (_context.Bookings == null)
+            var guest = new AssignGuestFormModel
             {
-                return Problem("Entity set 'ApplicationDbContext.Bookings'  is null.");
-            }
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking != null)
-            {
-                _context.Bookings.Remove(booking);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                BookingId = id,
+            };
+
+            return this.View(guest);
         }
 
-        private bool BookingExists(string id)
+        [HttpPost]
+        public async Task<IActionResult> AssignGuest(AssignGuestFormModel guest)
         {
-          return _context.Bookings.Any(e => e.Id == id);
+            if (!string.IsNullOrWhiteSpace(guest.LoadGuestButton))
+            {
+                var curGuest = this.bookingService.LoadGuest(guest.GuestId);
+                if (curGuest != null)
+                {
+                    return this.View(curGuest);
+                }
+
+                return this.View(guest);
+            }
+
+            if(!string.IsNullOrWhiteSpace(guest.AssignButton))
+            {
+                if (!ModelState.IsValid)
+                {
+                    return this.View(guest);
+                }
+
+                await this.bookingService.AssignGuestToBooking(guest);
+
+                return this.RedirectToAction("All", "Bookings");
+            }
+
+            return this.View(guest);
         }
     }
 }

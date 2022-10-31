@@ -14,7 +14,7 @@ namespace IT703_A2.Controllers
             this.homeService = homeService;
         }
 
-        public IActionResult Index()
+        public IActionResult All()
         {
             var currentDashboard = this.homeService.GetDashboardInfo();
 
