@@ -1,0 +1,89 @@
+﻿@model ListRoomTypeQueryModel
+
+@{
+    ViewData["Title"] = "All Room Types";
+}
+
+<h1 class="text-center my-5">All Room Types</h1>
+
+<div class="row justify-content-center">
+
+    @foreach (var roomType in @Model.RoomTypes)
+    {
+        <div class="card col-4">
+            <img src="@roomType.Image" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">@roomType.Name</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Rate: @roomType.Rate</li>
+                <li class="list-group-item">Number of Beds: @roomType.NumOfBeds</li>
+                <li class="list-group-item">Room Count: @roomType.RoomsCount</li>
+            </ul>
+            <div class="card-body col-md-12">
+                <a class="btn-warning btn-sm col-md-3 offset-md-2" asp-controller="RoomTypes" asp-action="Edit" asp-route-id="@roomType.Id">Edit</a>
+                <a class="btn-danger btn-sm col-md-3 offset-md-2" asp-controller="RoomTypes" asp-action="Delete" asp-route-id="@roomType.Id">Delete</a>
+            </div>
+        </div>
+    }
+
+    <div class="row justify-content-center my-3">
+        <a class="btn btn-success col-2" asp-controller="RoomTypes" asp-action="Add">Add Room Type</a>
+    </div>
+
+    @{
+        int next = Model.CurrentPage;
+        next++;
+        int previous = Model.CurrentPage;
+        previous--;
+    }
+
+    <nav class="my-3">
+        <ul class="pagination justify-content-center">
+            @if (Model.CurrentPage == 1)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" hr tabindex="-1">Previous</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item ">
+                    <a class="page-link" asp-route-CurrentPage="@previous" hr tabindex="-1"
+                       asp-controller="RoomTypes" asp-action="All">Previous</a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                if (i == Model.CurrentPage)
+                {
+                    <li class="page-item active">
+                        <a class="page-link disableCursor">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="RoomTypes"
+                           asp-action="All" asp-route-CurrentPage="@i">@i</a>
+                    </li>
+                }
+            }
+            @if (Model.CurrentPage == Model.TotalPages)
+            {
+                <li class="page-item disabled">
+                    <a class="page-link">Next</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-route-CurrentPage="@next" asp-controller="RoomTypes"
+                       asp-action="All">Next</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+</div>
+

@@ -44,12 +44,13 @@ nav li a {
     transition: color .3s ease-in-out, box-shadow .4s ease-in-out !important;
 }
 
+nav li a:hover {
+    box-shadow: inset 150px 0 0 0 #8861c7;
+    color: white !important;
+}
 
-
-
-    nav li a:hover {
-        box-shadow: inset 150px 0 0 0 #8861c7;
-        color: white !important;
-    }
-
-
+.card-img-top {
+   width: 100%!important;
+   height: 200px!important;
+   object-fit: cover;
+}
