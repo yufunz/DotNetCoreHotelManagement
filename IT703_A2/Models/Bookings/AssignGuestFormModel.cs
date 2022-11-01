@@ -8,7 +8,7 @@ namespace IT703_A2.Models.Bookings
 
         public string BookingId { get; set; }
 
-        [Display(Name = "Full name")]
+        [Display(Name = "Full Name")]
         public string GuestName { get; set; }
 
         [Display(Name = "Address")]
