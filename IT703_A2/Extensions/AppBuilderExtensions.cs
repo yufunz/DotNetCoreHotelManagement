@@ -111,7 +111,7 @@ namespace IT703_A2.Extensions
 
                     var role = new IdentityRole { Name = "Housekeeper" };
 
-                    const string hkEmail = "reception@tomive.com";
+                    const string hkEmail = "housekeeper@tomive.com";
                     const string hkPassword = "password!";
                     const string hkName = "Misandu Perera";
 
