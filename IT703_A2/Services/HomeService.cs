@@ -75,7 +75,7 @@ namespace IT703_A2.Services
             return this.db
                 .Bookings
                 .Where(r => r.Status != BookingStatus.Canceled &&
-                r.RoomBookeds.All(r => r.Room.Hotel == currentHotel) &&
+                //r.RoomBookeds.All(r => r.Room.Hotel == currentHotel) &&
                 r.CheckIn <= DateTime.Now.Date && r.CheckOut >= DateTime.Now.Date)
                 .Count();
         }
