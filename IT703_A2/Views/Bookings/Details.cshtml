@@ -65,10 +65,10 @@
 </div>
 
 <div class="row justify-content-center">
-<a class="btn btn-danger col-2 m-3" asp-controller="Bookings" asp-action="Delete" asp-route-Id="@Model.Id">Delete</a>
+    <a class="btn btn-danger col-2 m-3" asp-controller="Bookings" asp-action="Delete" asp-route-Id="@Model.Id">Delete</a>
 
-@if (string.IsNullOrWhiteSpace(Model.GuestName))
-{
-    <a class="btn btn-success col-2 m-3" asp-controller="Bookings" asp-action="AssignGuest" asp-route-id="@Model.Id">Assign Guest</a>
-}
+    @if (string.IsNullOrWhiteSpace(Model.GuestName))
+    {
+        <a class="btn btn-success col-2 m-3" asp-controller="Bookings" asp-action="AssignGuest" asp-route-id="@Model.Id">Assign Guest</a>
+    }
 </div>

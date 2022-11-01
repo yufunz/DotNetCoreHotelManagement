@@ -1,54 +1,67 @@
-﻿@model IT703_A2.Models.Invoice
+﻿@model DetailsInvoiceViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Invoice Details";
 }
 
-<h1>Details</h1>
+<h1 class="text-center my-5">Invoice Details</h1>
 
-<div>
-    <h4>Invoice</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Booking.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IssuedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IssuedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PaidDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PaidDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Paid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Paid)
-        </dd>
-    </dl>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-info-circle"></i> Info
+    </div>
+    <div class="card-body">
+        <p class="card-text">When an invoice is paid, the status will change to <code>Active</code> and paid field will be "Yes". If an active (paid) invoice gets deleted, its status will be set to <code>Canceled</code> and the related bookings will also get canceled.</p>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <table class="table table-striped my-3">
+            <tbody>
+                <tr>
+                    <td class="table-info">Booking Name:</td>
+                    <td>@Model.BookingName</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Amount:</td>
+                    <td>$@Model.Price</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Invoice Status:</td>
+                    <td>@Model.Status</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Issued Date:</td>
+                    <td>@Model.IssuedDate</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Paid Date:</td>
+                    <td>@Model.PaidDate?.ToString("dd-MM-yyyy")</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Paid:</td>
+                    <td>@Model.Paid</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Guest Name:</td>
+                    <td>@Model.GuestName</td>
+                </tr>
+                <tr>
+                    <td class="table-info">Guest address: </td>
+                    <td>@Model.Address</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <a class="btn btn-danger col-2 m-3" asp-controller="Invoices" asp-action="Delete" asp-route-Id="@Model.Id">Delete</a>
+
+    @if(Model.Status != "Active")
+    {
+        <a class="btn btn-success col-2 m-3" asp-controller="Invoices" asp-action="Pay" asp-route-id="@Model.Id">Pay</a>
+    }
+
 </div>
