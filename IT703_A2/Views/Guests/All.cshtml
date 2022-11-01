@@ -1,0 +1,136 @@
+﻿@model ListGuestsQueryModel
+
+@{
+    ViewData["Title"] = "All Guests";
+}
+
+<h1 class="text-center my-5">All Guests</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-info-circle"></i> Info
+    </div>
+    <div class="card-body">
+        <p class="card-text">All the active/deleted guests will be shown here. Please use name, address, phone, and email for searching. Click the table header for sorting.</p>
+    </div>
+</div>
+
+<form method="get" class="my-3">
+    <div class="row">
+        <div class="form-group col-3">
+            <input class="form-control" id="searchField" asp-for="@Model.Search" />
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn theme-btn my-2" id="searchBtn" value="Search" />
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped my-3">
+    <thead id="orderByHeaders">
+        <tr class="table-warning">
+            <th scope="col">
+                <a class="text-decoration-none text-dark" asp-controller="Guests" asp-action="All"
+                   asp-route-SortBy="1" asp-route-AscOrDesc="@(Model.AscOrDesc+1 == 3 ? 1 : 2)" asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-Search="@Model.Search">
+                    Guest ID
+                </a>
+            </th>
+            <th scope="col">
+                <a class="text-decoration-none text-dark" asp-controller="Guests" asp-action="All"
+                   asp-route-SortBy="1" asp-route-AscOrDesc="@(Model.AscOrDesc+1 == 3 ? 1 : 2)" asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-Search="@Model.Search">
+                    First Name
+                </a>
+            </th>
+            <th scope="col">
+                <a class="text-decoration-none text-dark" asp-controller="Guests" asp-action="All"
+                   asp-route-SortBy="2" asp-route-AscOrDesc="@(Model.AscOrDesc+1 == 3 ? 1 : 2)" asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-Search="@Model.Search">Last Name</a>
+            </th>
+            <th scope="col">
+                <a class="text-decoration-none text-dark" asp-controller="Guests" asp-action="All"
+                   asp-route-SortBy="5" asp-route-AscOrDesc="@(Model.AscOrDesc+1 == 3 ? 1 : 2)" asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-Search="@Model.Search">Phone</a>
+            </th>
+            <th scope="col">
+                <a class="text-decoration-none text-dark" asp-controller="Guests" asp-action="All"
+                   asp-route-SortBy="4" asp-route-AscOrDesc="@(Model.AscOrDesc+1 == 3 ? 1 : 2)" asp-route-currentPage="@Model.CurrentPage"
+                   asp-route-Search="@Model.Search">Created At</a>
+            </th>
+            <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var guest in Model.AllGuests)
+        {
+            <tr>
+                <td>@guest.Id</td>
+                <td>@guest.FirstName</td>
+                <td>@guest.LastName</td>
+                <td>@guest.Phone</td>
+                <td>@guest.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td><a class="btn btn-primary" asp-controller="Guests" asp-action="Details" asp-route-id="@guest.Id">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    int next = Model.CurrentPage;
+    next++;
+    int previous = Model.CurrentPage;
+    previous--;
+}
+
+<nav class="my-3">
+    <ul class="pagination justify-content-center">
+        @if (previous < 1)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" asp-controller="Guests" asp-action="All" asp-route-currentPage="@previous"
+                   asp-route-SortBy="@Model.SortBy" asp-route-ascOrDesc="@Model.AscOrDesc" asp-route-Search="@Model.Search" tabindex="-1">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="Guests" asp-action="All" asp-route-currentPage="@previous"
+                   asp-route-SortBy="@Model.SortBy" asp-route-ascOrDesc="@Model.AscOrDesc" asp-route-Search="@Model.Search" tabindex="-1">Previous</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (Model.CurrentPage == i)
+            {
+                <li class="page-item active">
+                    <a class="page-link disableCursor">@i <span class="sr-only"></span></a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Guests" asp-action="All" asp-route-currentPage="@i"
+                       asp-route-SortBy="@Model.SortBy" asp-route-ascOrDesc="@Model.AscOrDesc" asp-route-Search="@Model.Search">@i</a>
+                </li>
+            }
+
+        }
+        @if (Model.CurrentPage == Model.TotalPages)
+        {
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="Guests" asp-action="All" asp-route-currentPage="@next"
+                   asp-route-SortBy="@Model.SortBy" asp-route-ascOrDesc="@Model.AscOrDesc" asp-route-Search="@Model.Search">Next</a>
+            </li>
+        }
+
+    </ul>
+</nav>
+<a class="btn btn-success" asp-controller="Guests" asp-action="Add">Add Guest</a>
+

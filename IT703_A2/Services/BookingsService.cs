@@ -120,10 +120,8 @@ namespace IT703_A2.Services
 
             var currentGuest = this.db
                 .Guests
-                .Select(g => new
-                {
-                    Id = g.Id,
-                })
+                .Where(g => g.Id == guest.GuestId)
+                //.Select(g => new { Id = g.Id, })
                 .FirstOrDefault();
 
             currentBooking.GuestId = currentGuest.Id;
@@ -262,11 +260,12 @@ namespace IT703_A2.Services
             return booking;
         }
 
-        public AssignGuestFormModel LoadGuest(string identityId)
+        public AssignGuestFormModel LoadGuest(string guestId)
         {
             return this.db
                 .Guests
-                .Where(g => g.Deleted == false)
+                .Where(g => g.Id == guestId && g.Deleted == false)
+                //.Where(g => g.Deleted == false && (g.FirstName.Contains(guestName) || g.LastName.Contains(guestName)))
                 .Select(g => new AssignGuestFormModel
                 {
                     GuestAddress = g.Address,

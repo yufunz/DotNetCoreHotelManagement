@@ -60,6 +60,7 @@ namespace IT703_A2.Controllers
             {
 
                 /*
+                # Some properties need to be nullable
                 if (!ModelState.IsValid)
                 {
                     booking = this.bookingService.ListFreeRooms(booking);
@@ -106,8 +107,11 @@ namespace IT703_A2.Controllers
             if (!string.IsNullOrWhiteSpace(guest.LoadGuestButton))
             {
                 var curGuest = this.bookingService.LoadGuest(guest.GuestId);
+
+
                 if (curGuest != null)
                 {
+
                     return this.View(curGuest);
                 }
 

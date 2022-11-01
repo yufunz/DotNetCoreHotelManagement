@@ -9,16 +9,16 @@ namespace IT703_A2.Models.Bookings
         public string BookingId { get; set; }
 
         [Display(Name = "Full Name")]
-        public string GuestName { get; set; }
+        public string? GuestName { get; set; }
 
         [Display(Name = "Address")]
-        public string GuestAddress { get; set; }
+        public string? GuestAddress { get; set; }
 
         [Display(Name = "Phone")]
-        public string GuestPhone { get; set; }
+        public string? GuestPhone { get; set; }
 
-        public string LoadGuestButton { get; set; }
+        public string? LoadGuestButton { get; set; }
 
-        public string AssignButton { get; set; }
+        public string? AssignButton { get; set; }
     }
 }
