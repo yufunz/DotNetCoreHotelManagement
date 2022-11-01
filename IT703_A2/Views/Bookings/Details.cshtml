@@ -1,78 +1,74 @@
-﻿@model IT703_A2.Models.Booking
+﻿@model DetailsBookingViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Booking Details";
 }
 
-<h1>Details</h1>
+<h1 class="text-center my-5">Booking Details</h1>
 
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RestaurantCharge)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RestaurantCharge)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Paid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Paid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CheckIn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CheckIn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CheckOut)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CheckOut)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Guest)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Guest.Id)
-        </dd>
-    </dl>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-info-circle"></i> Info
+    </div>
+    <div class="card-body">
+        <p class="card-text">Assign a guest to a booking to change booking status. If you click <code>Delete</code>, the booking and its related invoice will be deleted.</p>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <table class="table table-striped my-3">
+            <tbody>
+                <tr>
+                    <td class="table-success">Booking Name:</td>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Check-In Date</td>
+                    <td>@Model.CheckIn</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Check-Out Date</td>
+                    <td>@Model.CheckOut</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Created At:</td>
+                    <td>@Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Duration:</td>
+                    <td>@Model.Duration Night(s)</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Price:</td>
+                    <td>@Model.Price</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Status:</td>
+                    <td>@Model.Status</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Guest Name:</td>
+                    <td>@Model.GuestName</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Invoice Paid:</td>
+                    <td>@Model.InvoicePaid</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Rooms Booked:</td>
+                    <td>@Model.RoomBookeds</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+<a class="btn btn-danger col-2 m-3" asp-controller="Bookings" asp-action="Delete" asp-route-Id="@Model.Id">Delete</a>
+
+@if (string.IsNullOrWhiteSpace(Model.GuestName))
+{
+    <a class="btn btn-success col-2 m-3" asp-controller="Bookings" asp-action="AssignCustomer" asp-route-id="@Model.Id">Assign Guest</a>
+}
 </div>
