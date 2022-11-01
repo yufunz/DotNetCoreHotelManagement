@@ -64,9 +64,7 @@ namespace IT703_A2.Services
         {
             return this.db
                 .Invoices
-                .Where(i => i.Status != InvoiceStatus.Canceled &&
-                i.Paid == false &&
-                i.Booking.RoomBookeds.All(r => r.Room.Hotel == currentHotel))
+                .Where(i => i.Status != InvoiceStatus.Canceled && i.Paid == false)
                 .Count();
         }
 
