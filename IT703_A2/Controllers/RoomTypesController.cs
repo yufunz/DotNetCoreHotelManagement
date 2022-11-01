@@ -13,7 +13,7 @@ using IT703_A2.Services;
 
 namespace IT703_A2.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Manager,Reception")]
     public class RoomTypesController : Controller
     {
         private readonly IRoomTypesService roomTypeService;

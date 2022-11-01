@@ -23,16 +23,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="All">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="All">Bookings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="All">Rooms</a>
+                        </li>
                         @if (User.IsInRole("Manager") || User.IsInRole("Reception"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="All">Rooms</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="RoomTypes" asp-action="All">Room Types</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="All">Bookings</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Guests" asp-action="All">Guests</a>
@@ -43,9 +43,11 @@
                         }
                         @if (User.IsInRole("Manager"))
                         {
+                            <!--
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="All">Users</a>
                             </li>
+                            -->
                         }
                     </ul>
                     <partial name="_LoginPartial" />

@@ -12,7 +12,7 @@ using IT703_A2.Services;
 
 namespace IT703_A2.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Manager,Reception")]
     public class InvoicesController : Controller
     {
         private readonly IInvoicesService invoiceService;
