@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IT703_A2.Data;
@@ -10,6 +11,8 @@ using IT703_A2.Models;
 
 namespace IT703_A2.Controllers
 {
+
+    [Authorize]
     public class AgenciesController : Controller
     {
         private readonly ApplicationDbContext _context;

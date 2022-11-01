@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using IT703_A2.Data;
 using IT703_A2.Models;
 using IT703_A2.Models.RoomTypes;
@@ -12,6 +13,7 @@ using IT703_A2.Services;
 
 namespace IT703_A2.Controllers
 {
+    [Authorize]
     public class RoomTypesController : Controller
     {
         private readonly IRoomTypesService roomTypeService;

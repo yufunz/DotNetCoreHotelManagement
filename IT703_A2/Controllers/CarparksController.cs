@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using IT703_A2.Data;
 using IT703_A2.Models;
 
 namespace IT703_A2.Controllers
 {
+    [Authorize]
     public class CarparksController : Controller
     {
         private readonly ApplicationDbContext _context;

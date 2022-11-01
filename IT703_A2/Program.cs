@@ -69,9 +69,7 @@ builder.Services.AddTransient<IRoomsService, RoomsService>();
 builder.Services.AddTransient<IBookingsService, BookingsService>();
 builder.Services.AddTransient<IInvoicesService, InvoicesService>();
 builder.Services.AddTransient<IHomeService, HomeService>();
-//builder.Services.AddTransient<IHotelsService, HotelsService>();
-//builder.Services.AddTransient<IUsersService, UsersService>();
-//builder.Services.AddTransient<ILoginUsersService, LoginUsersService>();
+builder.Services.AddTransient<ILoginUsersService, LoginUsersService>();
 
 
 var app = builder.Build();
@@ -99,9 +97,17 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+/*
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=All}/{id?}");
+app.MapRazorPages();
+*/
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=LoginUsers}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
