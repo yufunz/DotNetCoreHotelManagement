@@ -1,66 +1,62 @@
-﻿@model IT703_A2.Models.Guest
+﻿@model DetailsGuestViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Guest Details";
 }
 
-<h1>Details</h1>
+<h1 class="text-center my-5">Guest Details</h1>
 
-<div>
-    <h4>Guest</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Details)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Deleted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Deleted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-    </dl>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-info-circle"></i> Info
+    </div>
+    <div class="card-body">
+        <p class="card-text">Deleting a guest will cancel bookings and related invoices.</p>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <table class="table table-striped my-3">
+            <tbody>
+                <tr>
+                    <td class="table-success">First Name:</td>
+                    <td>@Model.FirstName</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Last Name:</td>
+                    <td>@Model.LastName</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Address:</td>
+                    <td>@Model.Address</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Phone:</td>
+                    <td>@Model.Phone</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Email:</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Created At:</td>
+                    <td>@Model.CreatedAt</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Details:</td>
+                    <td>@Model.Details</td>
+                </tr>
+                <tr>
+                    <td class="table-success">Number of Bookings:</td>
+                    <td>@Model.CreatedBookingsCount</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<div class="row justify-content-center">
+    <a class="btn btn-warning col-2 m3" asp-controller="Guests" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-danger col-2 m-3" asp-route-id="@Model.Id" asp-controller="Guests" asp-action="Delete">Delete</a>
+<</div>
