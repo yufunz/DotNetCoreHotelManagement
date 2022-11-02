@@ -111,5 +111,8 @@
         }
     </ul>
 </nav>
-<a class="btn btn-success" asp-controller="Rooms" asp-action="Add">Add Room</a>
+@if (User.IsInRole("Manager"))
+{
+    <a class="btn btn-success" asp-controller="Rooms" asp-action="Add">Add Room</a>
+}
 

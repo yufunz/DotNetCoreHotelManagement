@@ -64,11 +64,14 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
-    <a class="btn btn-danger col-2 m-3" asp-controller="Bookings" asp-action="Delete" asp-route-Id="@Model.Id">Delete</a>
+@if (User.IsInRole("Manager") || User.IsInRole("Reception"))
+{
+    <div class="row justify-content-center">
+        <a class="btn btn-danger col-2 m-3" asp-controller="Bookings" asp-action="Delete" asp-route-Id="@Model.Id">Delete</a>
 
-    @if (string.IsNullOrWhiteSpace(Model.GuestName))
-    {
-        <a class="btn btn-success col-2 m-3" asp-controller="Bookings" asp-action="AssignGuest" asp-route-id="@Model.Id">Assign Guest</a>
-    }
-</div>
+        @if (string.IsNullOrWhiteSpace(Model.GuestName))
+        {
+            <a class="btn btn-success col-2 m-3" asp-controller="Bookings" asp-action="AssignGuest" asp-route-id="@Model.Id">Assign Guest</a>
+        }
+    </div>
+}

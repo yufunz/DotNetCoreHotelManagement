@@ -123,4 +123,7 @@
         }
     </ul>
 </nav>
-<a class="btn btn-success" asp-controller="Bookings" asp-action="Add">Add Booking</a>
+@if (User.IsInRole("Manager") || User.IsInRole("Reception"))
+{
+    <a class="btn btn-success" asp-controller="Bookings" asp-action="Add">Add Booking</a>
+}

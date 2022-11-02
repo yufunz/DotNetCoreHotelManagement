@@ -61,15 +61,12 @@ namespace IT703_A2.Controllers
             if (!string.IsNullOrWhiteSpace(booking.AddBookingButton))
             {
 
-                /*
-                # Some properties need to be nullable
                 if (!ModelState.IsValid)
                 {
                     booking = this.bookingService.ListFreeRooms(booking);
 
                     return this.View(booking);
                 }
-                */
 
                 await this.bookingService.AddBooking(booking);
 

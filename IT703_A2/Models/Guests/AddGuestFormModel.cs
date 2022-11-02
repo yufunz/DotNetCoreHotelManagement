@@ -22,7 +22,7 @@ namespace IT703_A2.Models.Guests
         [Required]
         public string Address { get; set; }
 
-        public string Details { get; set; }
+        public string? Details { get; set; }
 
         public Company? Company { get; set; }
 

@@ -1,0 +1,58 @@
+﻿@model AddRoomFormModel
+
+@{
+    ViewData["Title"] = "Add Room";
+}
+
+<h1 class="text-center my-5">
+    Details @Model.RoomNum
+</h1>
+
+<div class="row justify-content-center">
+
+    <form method="post" class="col-4">
+        <div class="form-group mb-3">
+            <label asp-for="RoomNum"></label>
+            <input asp-for="RoomNum" class="form-control" value="@Model.RoomNum" />
+            <span asp-validation-for="RoomNum" class="text-danger small"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="FloorNum"></label>
+            <input asp-for="FloorNum" class="form-control" value="@Model.FloorNum" />
+            <span asp-validation-for="FloorNum" class="text-danger small"></span>
+        </div>
+
+        <!--
+        <div class="form-group mb-3">
+            <label asp-for="HotelName"></label><br />
+            <input asp-for="HotelName" class="form-control" value="@Model.HotelName" disabled />
+            <span asp-validation-for="HotelName" class="text-danger small"></span>
+        </div>
+        -->
+
+        <div class="form-group mb-3">
+            <label asp-for="RoomTypeId"></label><br />
+            <select asp-for="RoomTypeId">
+                @foreach (var rt in Model.RoomTypes)
+                {
+                    <option value="@rt.Id">@rt.Name</option>
+                }
+            </select>
+            <span asp-validation-for="RoomTypeId" class="text-danger small"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+        </div>
+
+        <input type="hidden" asp-for="HotelId" value="@Model.HotelId" />
+        <input type="hidden" asp-for="HotelName" value="@Model.HotelName" />
+        <input type="submit" value="Add" class="btn btn-success col-4" />
+    </form>
+</div>
+
+@section scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

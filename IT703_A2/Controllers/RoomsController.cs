@@ -76,6 +76,7 @@ namespace IT703_A2.Controllers
                 room.HotelId = fillRoomFields.HotelId;
                 room.RoomTypes = fillRoomFields.RoomTypes;
                 room.HotelName = fillRoomFields.HotelName;
+                room.RoomStatus = fillRoomFields.RoomStatus;
 
                 return this.View(room);
             }

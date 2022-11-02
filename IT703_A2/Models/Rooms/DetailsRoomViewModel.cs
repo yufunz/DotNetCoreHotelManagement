@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using IT703_A2.Models.Enums;
 
 namespace IT703_A2.Models.Rooms
 {
@@ -6,20 +7,21 @@ namespace IT703_A2.Models.Rooms
     {
         public string Id { get; set; }
 
-        [Display(Name = "Room name")]
+        [Display(Name = "Room Name")]
         public string RoomNum { get; set; }
 
+        [Display(Name = "Floor Number")]
         public int FloorNum { get; set; }
 
         public string Description { get; set; }
 
-        [Display(Name = "Hotel name")]
+        [Display(Name = "Hotel Name")]
         public string HotelName { get; set; }
 
-        [Display(Name = "Room type")]
+        [Display(Name = "Room Type")]
         public string RoomType { get; set; }
 
-        [Display(Name = "Room status")]
-        public string RoomStatus { get; set; }
+        [Display(Name = "Room Status")]
+        public RoomStatus RoomStatus { get; set; }
     }
 }

@@ -20,10 +20,15 @@
                 <li class="list-group-item">Number of Beds: @roomType.NumOfBeds</li>
                 <li class="list-group-item">Room Count: @roomType.RoomsCount</li>
             </ul>
+            @*
+            @if (User.IsInRole("Manager"))
+            {
             <div class="card-body col-md-12">
                 <a class="btn-warning btn-sm col-md-3 offset-md-2" asp-controller="RoomTypes" asp-action="Edit" asp-route-id="@roomType.Id">Edit</a>
                 <a class="btn-danger btn-sm col-md-3 offset-md-2" asp-controller="RoomTypes" asp-action="Delete" asp-route-id="@roomType.Id">Delete</a>
             </div>
+            }
+            *@
         </div>
     }
 

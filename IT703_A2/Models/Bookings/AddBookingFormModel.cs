@@ -22,9 +22,9 @@ namespace IT703_A2.Models.Bookings
         [Display(Name = "Check-out Date")]
         public DateTime CheckOut { get; set; }
 
-        public string LoadRoomsButton { get; set; }
+        public string? LoadRoomsButton { get; set; }
 
-        public string AddBookingButton { get; set; }
+        public string? AddBookingButton { get; set; }
 
         public ICollection<SelectListItem> AvailableRooms;
 
